@@ -39,6 +39,10 @@ func Get() string {
 		}
 	}
 
+	if commit == "" && stamp == (time.Time{}) {
+		return version
+	}
+
 	if len(commit) == 40 {
 		commit = commit[:7]
 	} else if commit == "" {
@@ -47,13 +51,13 @@ func Get() string {
 
 	mod := ""
 	if modified {
-		mod = "~"
+		mod = "*"
 	}
 
 	version = fmt.Sprintf(
 		"%s%s-%s",
-		commit,
 		mod,
+		commit,
 		stamp.UTC().Format("2006.02.01.15.03.04"),
 	)
 
